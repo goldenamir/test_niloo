@@ -1,0 +1,106 @@
+/* Theme Variables */
+:root {
+    /* Light theme */
+    --primary-color: #4A4A4A;  /* Dark Gray */
+    --secondary-color: #6B6B6B;  /* Medium Gray */
+    --accent-color: #808080;  /* Gray */
+    --background-color: #FFFFFF;  /* White */
+    --surface-color: #F5F5F5;  /* Light Gray */
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #E0E0E0;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+    --primary-color: #E0E0E0;  /* Light Gray */
+    --secondary-color: #B0B0B0;  /* Medium Gray */
+    --accent-color: #808080;  /* Gray */
+    --background-color: #1A1A1A;  /* Dark Gray */
+    --surface-color: #2D2D2D;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B0B0B0;
+    --border-color: #404040;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    background: var(--primary-color);
+    color: white;
+}
+
+.theme-toggle i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Apply theme colors to specific elements */
+.navbar {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+.cta-button, .login-highlight {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.hero {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+.market-stat, .crypto-card, .stat-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+}
+
+.positive {
+    color: var(--primary-color);
+}
+
+.negative {
+    color: var(--accent-color);
+}
+
+/* Footer theme */
+footer {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+/* Form elements */
+input, textarea, select {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+/* Links */
+a {
+    color: var(--secondary-color);
+}
+
+a:hover {
+    color: var(--accent-color);
+} 
