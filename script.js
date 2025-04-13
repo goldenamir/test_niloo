@@ -1,88 +1,4 @@
-// Mobile Navigation
-const navSlide = () => {
-    const burger = document.querySelector('.burger');
-    const nav = document.querySelector('.nav-links');
-    const navLinks = document.querySelectorAll('.nav-links li');
-
-    burger.addEventListener('click', () => {
-        // Toggle Nav
-        nav.classList.toggle('nav-active');
-
-        // Animate Links
-        navLinks.forEach((link, index) => {
-            if (link.style.animation) {
-                link.style.animation = '';
-            } else {
-                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-            }
-        });
-
-        // Burger Animation
-        burger.classList.toggle('toggle');
-    });
-}
-
-// Language Switching
-const initLanguageSwitcher = () => {
-    const languageSelect = document.getElementById('language-select');
-    
-    // Check for saved language preference
-    const savedLanguage = localStorage.getItem('language') || 'en';
-    languageSelect.value = savedLanguage;
-    
-    // Apply initial language
-    changeLanguage(savedLanguage);
-    
-    // Add event listener for language changes
-    languageSelect.addEventListener('change', (e) => {
-        const selectedLanguage = e.target.value;
-        changeLanguage(selectedLanguage);
-        
-        // Save language preference
-        localStorage.setItem('language', selectedLanguage);
-    });
-}
-
-const changeLanguage = (language) => {
-    // Set document direction
-    document.documentElement.lang = language;
-    document.body.setAttribute('dir', language === 'fa' ? 'rtl' : 'ltr');
-    
-    // Update all elements with data attributes
-    document.querySelectorAll('[data-' + language + ']').forEach(element => {
-        if (element.hasAttribute('data-' + language)) {
-            element.textContent = element.getAttribute('data-' + language);
-        }
-    });
-    
-    // Update placeholders
-    document.querySelectorAll('input[data-placeholder-' + language + '], textarea[data-placeholder-' + language + ']').forEach(element => {
-        if (element.hasAttribute('data-placeholder-' + language)) {
-            element.placeholder = element.getAttribute('data-placeholder-' + language);
-        }
-    });
-    
-    // Load Farsi font if needed
-    if (language === 'fa') {
-        loadFarsiFont();
-    }
-}
-
-const loadFarsiFont = () => {
-    // Check if font is already loaded
-    if (document.getElementById('vazir-font')) return;
-    
-    // Create link element for font
-    const fontLink = document.createElement('link');
-    fontLink.id = 'vazir-font';
-    fontLink.rel = 'stylesheet';
-    fontLink.href = 'https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css';
-    
-    // Add to document head
-    document.head.appendChild(fontLink);
-}
-
-// Smooth Scrolling
+// Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -92,117 +8,275 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Simulated Crypto Price Updates
-const updateCryptoPrices = () => {
-    const prices = document.querySelectorAll('.price');
-    const changes = document.querySelectorAll('.change');
-    
-    prices.forEach((price, index) => {
-        const currentPrice = parseFloat(price.textContent.replace('$', '').replace(',', ''));
-        const change = parseFloat(changes[index].textContent.replace('%', ''));
-        
-        // Simulate price movement
-        const newChange = (Math.random() * 2 - 1).toFixed(2);
-        const newPrice = (currentPrice * (1 + newChange/100)).toFixed(2);
-        
-        // Update price with animation
-        price.style.transform = 'scale(1.1)';
-        price.style.color = newChange >= 0 ? 'var(--positive-color)' : 'var(--negative-color)';
-        setTimeout(() => {
-            price.textContent = `$${newPrice}`;
-            price.style.transform = 'scale(1)';
-            price.style.color = '';
-        }, 200);
-        
-        // Update change percentage
-        changes[index].textContent = `${newChange >= 0 ? '+' : ''}${newChange}%`;
-        changes[index].className = `change ${newChange >= 0 ? 'positive' : 'negative'}`;
+// Add animation to feature cards when they come into view
+const featureCards = document.querySelectorAll('.feature-card');
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
     });
-}
-
-// Portfolio Chart Animation
-const initPortfolioChart = () => {
-    const chart = document.querySelector('.chart-placeholder');
-    let width = chart.offsetWidth;
-    let height = chart.offsetHeight;
-    let points = [];
-    
-    // Generate random points for the chart
-    for (let i = 0; i < 50; i++) {
-        points.push({
-            x: (i / 50) * width,
-            y: height * (0.3 + Math.random() * 0.4)
-        });
-    }
-    
-    // Create SVG path
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    path.setAttribute('width', width);
-    path.setAttribute('height', height);
-    path.style.position = 'absolute';
-    path.style.top = '0';
-    path.style.left = '0';
-    
-    const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    const d = points.map((point, i) => 
-        `${i === 0 ? 'M' : 'L'} ${point.x} ${point.y}`
-    ).join(' ');
-    
-    pathElement.setAttribute('d', d);
-    pathElement.setAttribute('stroke', 'var(--accent-color)');
-    pathElement.setAttribute('stroke-width', '2');
-    pathElement.setAttribute('fill', 'none');
-    
-    path.appendChild(pathElement);
-    chart.appendChild(path);
-}
-
-// Form Submission
-const contactForm = document.getElementById('contact-form');
-contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Get form data
-    const formData = new FormData(this);
-    const formObject = {};
-    formData.forEach((value, key) => {
-        formObject[key] = value;
-    });
-
-    // Here you would typically send the form data to a server
-    console.log('Form submitted:', formObject);
-    
-    // Show success message
-    alert('Thank you for your message! We will get back to you soon.');
-    this.reset();
+}, {
+    threshold: 0.1
 });
 
-// Scroll Animation
-const scrollAnimation = () => {
-    const sections = document.querySelectorAll('section');
+featureCards.forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(card);
+});
+
+// Add hover effect to pricing cards
+const pricingCards = document.querySelectorAll('.pricing-card');
+
+pricingCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+        card.style.transform = 'scale(1.05)';
+        card.style.transition = 'transform 0.3s ease';
+    });
+
+    card.addEventListener('mouseleave', () => {
+        if (!card.classList.contains('featured')) {
+            card.style.transform = 'scale(1)';
+        }
+    });
+});
+
+// Add click event to CTA button
+const ctaButton = document.querySelector('.cta-button');
+ctaButton.addEventListener('click', () => {
+    alert('Thank you for your interest! Our platform is coming soon.');
+});
+
+// Add click event to pricing buttons
+const pricingButtons = document.querySelectorAll('.pricing-button');
+pricingButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const plan = button.closest('.pricing-card').querySelector('h3').textContent;
+        alert(`Thank you for choosing the ${plan} plan! We'll contact you shortly.`);
+    });
+});
+
+// Add scroll-based navbar background change
+const navbar = document.querySelector('.navbar');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        navbar.style.backgroundColor = 'rgba(26, 26, 26, 0.95)';
+    } else {
+        navbar.style.backgroundColor = '#1a1a1a';
+    }
+});
+
+// Language Switching
+document.addEventListener('DOMContentLoaded', function() {
+    const langBtn = document.getElementById('langBtn');
+    const currentLang = document.querySelector('.current-lang');
+    const langLinks = document.querySelectorAll('.lang-dropdown a');
     
-    window.addEventListener('scroll', () => {
-        sections.forEach(section => {
-            const sectionTop = section.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
+    // Set initial language
+    let currentLanguage = 'en';
+    
+    // Language content
+    const content = {
+        en: {
+            // Navigation
+            features: 'Features',
+            about: 'About',
+            pricing: 'Pricing',
+            contact: 'Contact',
+            login: 'Login / Membership',
             
-            if (sectionTop < windowHeight * 0.75) {
-                section.classList.add('active');
+            // Hero Section
+            heroTitle: 'AI-Powered Trading Platform',
+            heroSubtitle: 'Transform complex market data into clear trading decisions',
+            getStarted: 'Get Started',
+            
+            // Features Section
+            featuresTitle: 'Key Features',
+            realTimeAnalytics: 'Real-Time Analytics',
+            realTimeDesc: 'Access live market data and insights',
+            aiInsights: 'AI-Powered Insights',
+            aiInsightsDesc: 'Get intelligent trading recommendations',
+            customAlerts: 'Custom Alerts',
+            customAlertsDesc: 'Never miss important market movements',
+            
+            // About Section
+            aboutTitle: 'About Unitrade Lab',
+            aboutText1: "We're a team of trading enthusiasts, developers, and tech innovators who believe that great tools make great traders. Unitrade Lab is our way of bringing powerful, easy-to-use trading solutions to anyone who wants to get ahead in the markets.",
+            aboutText2: "We've built this platform with care, focusing on what really matters: fast execution, smart analytics, and a great user experience. And we're just getting started!",
+            aboutText3: "Join us as we continue to grow, improve, and make trading accessible to all.",
+            
+            // Pricing Section
+            pricingTitle: 'Pricing Plans',
+            basicPlan: 'Basic',
+            basicPrice: '$29/month',
+            basicFeature1: 'Basic market analysis',
+            basicFeature2: 'Limited alerts',
+            basicFeature3: 'Email support',
+            choosePlan: 'Choose Plan',
+            proPlan: 'Pro',
+            proPrice: '$99/month',
+            proFeature1: 'Advanced analytics',
+            proFeature2: 'Unlimited alerts',
+            proFeature3: 'Priority support',
+            
+            // Contact Section
+            contactTitle: 'Contact Us',
+            email: 'Email',
+            phone: 'Phone',
+            location: 'Location',
+            yourName: 'Your Name',
+            yourEmail: 'Your Email',
+            yourMessage: 'Your Message',
+            sendMessage: 'Send Message',
+            
+            // Footer
+            copyright: '© 2024 TradeGPT. All rights reserved.'
+        },
+        fa: {
+            // Navigation
+            features: 'ویژگی‌ها',
+            about: 'درباره ما',
+            pricing: 'قیمت‌گذاری',
+            contact: 'تماس با ما',
+            login: 'ورود / عضویت',
+            
+            // Hero Section
+            heroTitle: 'پلتفرم معاملاتی هوش مصنوعی',
+            heroSubtitle: 'تبدیل داده‌های پیچیده بازار به تصمیمات معاملاتی روشن',
+            getStarted: 'شروع کنید',
+            
+            // Features Section
+            featuresTitle: 'ویژگی‌های کلیدی',
+            realTimeAnalytics: 'تحلیل‌های لحظه‌ای',
+            realTimeDesc: 'دسترسی به داده‌ها و بینش‌های زنده بازار',
+            aiInsights: 'بینش‌های هوش مصنوعی',
+            aiInsightsDesc: 'دریافت توصیه‌های معاملاتی هوشمند',
+            customAlerts: 'هشدارهای سفارشی',
+            customAlertsDesc: 'هرگز حرکات مهم بازار را از دست ندهید',
+            
+            // About Section
+            aboutTitle: 'درباره یونیت‌ترید لب',
+            aboutText1: 'ما تیمی از علاقه‌مندان به معاملات، توسعه‌دهندگان و نوآوران فناوری هستیم که معتقدیم ابزارهای عالی، معامله‌گران عالی می‌سازند. یونیت‌ترید لب راه ما برای ارائه راه‌حل‌های معاملاتی قدرتمند و آسان به هر کسی است که می‌خواهد در بازارها پیشرفت کند.',
+            aboutText2: 'ما این پلتفرم را با دقت ساخته‌ایم و بر آنچه واقعاً مهم است تمرکز کرده‌ایم: اجرای سریع، تحلیل‌های هوشمند و تجربه کاربری عالی. و ما تازه شروع کرده‌ایم!',
+            aboutText3: 'به ما بپیوندید تا به رشد، بهبود و دسترسی‌پذیر کردن معاملات برای همه ادامه دهیم.',
+            
+            // Pricing Section
+            pricingTitle: 'طرح‌های قیمت‌گذاری',
+            basicPlan: 'پایه',
+            basicPrice: '۲۹ دلار در ماه',
+            basicFeature1: 'تحلیل بازار پایه',
+            basicFeature2: 'هشدارهای محدود',
+            basicFeature3: 'پشتیبانی ایمیلی',
+            choosePlan: 'انتخاب طرح',
+            proPlan: 'حرفه‌ای',
+            proPrice: '۹۹ دلار در ماه',
+            proFeature1: 'تحلیل‌های پیشرفته',
+            proFeature2: 'هشدارهای نامحدود',
+            proFeature3: 'پشتیبانی اولویت‌دار',
+            
+            // Contact Section
+            contactTitle: 'تماس با ما',
+            email: 'ایمیل',
+            phone: 'تلفن',
+            location: 'موقعیت',
+            yourName: 'نام شما',
+            yourEmail: 'ایمیل شما',
+            yourMessage: 'پیام شما',
+            sendMessage: 'ارسال پیام',
+            
+            // Footer
+            copyright: '© ۲۰۲۴ تریدجی‌پی‌تی. تمامی حقوق محفوظ است.'
+        }
+    };
+    
+    // Handle language selection
+    langLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newLang = this.getAttribute('data-lang');
+            if (newLang !== currentLanguage) {
+                currentLanguage = newLang;
+                currentLang.textContent = newLang.toUpperCase();
+                updateContent(newLang);
             }
         });
     });
-}
-
-// Initialize all functions
-const init = () => {
-    navSlide();
-    scrollAnimation();
-    initPortfolioChart();
-    initLanguageSwitcher();
     
-    // Update crypto prices every 5 seconds
-    setInterval(updateCryptoPrices, 5000);
-}
-
-// Run initialization when DOM is loaded
-document.addEventListener('DOMContentLoaded', init); 
+    // Update content based on selected language
+    function updateContent(lang) {
+        // Update navigation links
+        document.querySelectorAll('.nav-links a').forEach((link, index) => {
+            const keys = ['features', 'about', 'pricing', 'contact'];
+            if (index < keys.length) {
+                link.textContent = content[lang][keys[index]];
+            }
+        });
+        
+        // Update login text
+        document.querySelector('.login-text').textContent = content[lang].login;
+        
+        // Update hero content
+        document.querySelector('.hero-text h1').textContent = content[lang].heroTitle;
+        document.querySelector('.hero-text p').textContent = content[lang].heroSubtitle;
+        document.querySelector('.get-start-icon span').textContent = content[lang].getStarted;
+        
+        // Update features section
+        document.querySelector('#features h2').textContent = content[lang].featuresTitle;
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards[0].querySelector('h3').textContent = content[lang].realTimeAnalytics;
+        featureCards[0].querySelector('p').textContent = content[lang].realTimeDesc;
+        featureCards[1].querySelector('h3').textContent = content[lang].aiInsights;
+        featureCards[1].querySelector('p').textContent = content[lang].aiInsightsDesc;
+        featureCards[2].querySelector('h3').textContent = content[lang].customAlerts;
+        featureCards[2].querySelector('p').textContent = content[lang].customAlertsDesc;
+        
+        // Update about section
+        document.querySelector('#about h2').textContent = content[lang].aboutTitle;
+        const aboutParagraphs = document.querySelectorAll('#about p');
+        aboutParagraphs[0].textContent = content[lang].aboutText1;
+        aboutParagraphs[1].textContent = content[lang].aboutText2;
+        aboutParagraphs[2].textContent = content[lang].aboutText3;
+        
+        // Update pricing section
+        document.querySelector('#pricing h2').textContent = content[lang].pricingTitle;
+        const pricingCards = document.querySelectorAll('.pricing-card');
+        pricingCards[0].querySelector('h3').textContent = content[lang].basicPlan;
+        pricingCards[0].querySelector('.price').textContent = content[lang].basicPrice;
+        const basicFeatures = pricingCards[0].querySelectorAll('li');
+        basicFeatures[0].textContent = content[lang].basicFeature1;
+        basicFeatures[1].textContent = content[lang].basicFeature2;
+        basicFeatures[2].textContent = content[lang].basicFeature3;
+        pricingCards[0].querySelector('.pricing-button').textContent = content[lang].choosePlan;
+        
+        pricingCards[1].querySelector('h3').textContent = content[lang].proPlan;
+        pricingCards[1].querySelector('.price').textContent = content[lang].proPrice;
+        const proFeatures = pricingCards[1].querySelectorAll('li');
+        proFeatures[0].textContent = content[lang].proFeature1;
+        proFeatures[1].textContent = content[lang].proFeature2;
+        proFeatures[2].textContent = content[lang].proFeature3;
+        pricingCards[1].querySelector('.pricing-button').textContent = content[lang].choosePlan;
+        
+        // Update contact section
+        document.querySelector('#contact h2').textContent = content[lang].contactTitle;
+        const infoItems = document.querySelectorAll('.info-item');
+        infoItems[0].querySelector('h3').textContent = content[lang].email;
+        infoItems[1].querySelector('h3').textContent = content[lang].phone;
+        infoItems[2].querySelector('h3').textContent = content[lang].location;
+        
+        const formInputs = document.querySelectorAll('.form-group input, .form-group textarea');
+        formInputs[0].placeholder = content[lang].yourName;
+        formInputs[1].placeholder = content[lang].yourEmail;
+        formInputs[2].placeholder = content[lang].yourMessage;
+        document.querySelector('.submit-btn').textContent = content[lang].sendMessage;
+        
+        // Update footer
+        document.querySelector('footer p').textContent = content[lang].copyright;
+        
+        // Update RTL/LTR direction
+        document.body.setAttribute('dir', lang === 'fa' ? 'rtl' : 'ltr');
+    }
+}); 
