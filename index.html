@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پلتفرم Learn & Earn</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+  <style>
+    body {
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      line-height: 1.8;
+      color: #333;
+      width: 100%;
+      min-width: 100%;
+      overflow-x: auto;
+    }
+    html {
+      width: 100%;
+      min-width: 100%;
+      overflow-x: auto;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      width: 100%;
+      position: relative;
+      margin-top: 60px;
+      margin-right: -2rem;
+      padding-right: 2rem;
+    }
+    .header-background {
+      position: fixed;
+      top: 60px;
+      right: 0;
+      width: 100%;
+      height: 200px;
+      background-color: #4CAF50;
+      z-index: 0;
+    }
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      margin-bottom: 2rem;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .header-owl {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid white;
+      background-color: white;
+      padding: 1px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      object-fit: contain;
+      transform: scale(1.4);
+      margin-right: 2rem;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      margin-right: 2rem;
+    }
+    header p {
+      font-size: 1.2rem;
+      font-weight: 500;
+      opacity: 0.9;
+      margin-top: 1rem;
+    }
+    nav {
+      background-color: #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 2rem;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      margin: 0;
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+    nav a {
+      color: white;
+      padding: 0.8rem 1.2rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border-radius: 5px;
+    }
+    nav a:hover {
+      background-color: #575757;
+      transform: translateY(-2px);
+    }
+    .container {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      margin-top: 0;
+    }
+    .section {
+      margin-bottom: 2.5rem;
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .section:hover {
+      transform: translateY(-5px);
+    }
+    .section h2 {
+      color: #4CAF50;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+    .section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 3px;
+      background-color: #4CAF50;
+      border-radius: 3px;
+    }
+    .section p {
+      font-size: 1.1rem;
+      line-height: 2;
+      color: #444;
+    }
+    .section ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .section ul li {
+      padding: 0.8rem 0;
+      font-size: 1.1rem;
+      border-bottom: 1px solid #eee;
+    }
+    .section ul li:last-child {
+      border-bottom: none;
+    }
+    footer {
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+      font-weight: 500;
+      width: 100%;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+    button:hover {
+      background-color: #45a049;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    .about-section {
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .about-section h2 {
+      color: #4CAF50;
+      margin-bottom: 2rem;
+      font-size: 2.2rem;
+      font-weight: 700;
+    }
+    .about-section p {
+      line-height: 2.2;
+      margin-bottom: 1.5rem;
+      color: #444;
+      font-size: 1.2rem;
+    }
+    .about-section .highlight {
+      color: #4CAF50;
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    .registration-form {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      color: #333;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-family: 'Vazirmatn', sans-serif;
+      transition: all 0.3s ease;
+    }
+    .form-group input:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+      outline: none;
+    }
+    .wallet-connection-section {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: #f8f9fa;
+      border-radius: 12px;
+      border: 1px solid #e9ecef;
+    }
+    .wallet-connection-section h3 {
+      color: #4CAF50;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+    .wallet-note {
+      font-size: 0.95rem;
+      color: #666;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 1.2rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+    .submit-btn:hover {
+      background-color: #45a049;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    @media (max-width: 1200px) {
+      .main-container {
+        padding: 1rem;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+      
+      .header-owl {
+        margin: 0 auto;
+      }
+      
+      header h1 {
+        margin: 0;
+        font-size: 1.8rem;
+      }
+      
+      .courses-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .contact-info {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      header {
+        padding: 1.5rem 1rem;
+        margin-top: 50px;
+      }
+      
+      .header-content {
+        padding: 0 1rem;
+      }
+      
+      .header-owl {
+        width: 70px;
+        height: 70px;
+      }
+      
+      header h1 {
+        font-size: 1.5rem;
+      }
+      
+      header p {
+        font-size: 1rem;
+      }
+      
+      nav {
+        padding: 0.5rem 1rem;
+        height: 50px;
+      }
+      
+      .nav-logo {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .wallet-btn span {
+        display: none;
+      }
+      
+      .wallet-btn {
+        padding: 0.5rem 1rem;
+      }
+      
+      .section-with-owl {
+        padding: 1.5rem;
+      }
+      
+      .owl-image {
+        width: 80px;
+        height: 80px;
+        margin-right: 15px;
+        margin-bottom: 10px;
+      }
+      
+      .section-with-owl h2 {
+        font-size: 1.5rem;
+      }
+      
+      .courses-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .course-item {
+        padding: 1rem;
+      }
+      
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .news-section-bottom {
+        margin: 1rem;
+        padding: 1rem;
+      }
+      
+      .contact-info {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-section {
+        margin: 0.5rem;
+        padding: 0.8rem;
+      }
+      
+      .contact-item {
+        padding: 0.8rem;
+      }
+      
+      footer {
+        padding: 1rem;
+        font-size: 0.9rem;
+      }
+    }
+    @media (max-width: 480px) {
+      header {
+        padding: 1rem 0.8rem;
+      }
+      
+      .header-owl {
+        width: 60px;
+        height: 60px;
+      }
+      
+      header h1 {
+        font-size: 1.3rem;
+      }
+      
+      .section-with-owl h2 {
+        font-size: 1.3rem;
+      }
+      
+      .owl-image {
+        width: 70px;
+        height: 70px;
+      }
+      
+      .contact-item {
+        padding: 0.6rem;
+      }
+      
+      .contact-item i {
+        width: 25px;
+        height: 25px;
+        font-size: 0.9rem;
+      }
+      
+      .contact-item h3 {
+        font-size: 0.8rem;
+      }
+      
+      .contact-item p {
+        font-size: 0.75rem;
+      }
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-right: auto;
+      position: relative;
+      z-index: 2;
+      padding-left: 2rem;
+    }
+    
+    .nav-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background-color: white;
+      padding: 1px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      object-fit: contain;
+      transform: scale(1);
+      transition: transform 0.3s ease;
+      position: relative;
+      z-index: 2;
+      margin-right: 1rem;
+    }
+    
+    .nav-logo:hover {
+      transform: scale(1.4);
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      padding: 0 2rem;
+      flex-wrap: wrap;
+    }
+    
+    .wallet-connect {
+      margin-left: auto;
+      position: relative;
+      z-index: 1;
+      padding-right: 2rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .wallet-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      white-space: nowrap;
+    }
+    
+    .wallet-btn:hover {
+      background-color: #2E7D32;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+    
+    .disconnect-btn {
+      background-color: #f44336;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .disconnect-btn:hover {
+      background-color: #d32f2f;
+      transform: translateY(-2px);
+    }
+    
+    .wallet-info {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      background-color: #f8f9fa;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      margin-right: 1rem;
+    }
+    
+    .owl-image {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 30px;
+      margin-bottom: 15px;
+      border-radius: 50%;
+      border: 3px solid #4CAF50;
+      background-color: white;
+      padding: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+    
+    .owl-image:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    
+    .section-with-owl h2 {
+      display: inline-block;
+      vertical-align: middle;
+      margin-bottom: 2rem;
+      padding-right: 20px;
+    }
+    
+    .section-with-owl > p,
+    .section-with-owl > ul,
+    .section-with-owl > form {
+      margin-top: 2rem;
+    }
+    
+    .section-with-owl {
+      position: relative;
+      padding: 2rem;
+      overflow: hidden;
+      min-height: auto;
+    }
+    
+    #courses h2 {
+      display: inline-block;
+      vertical-align: middle;
+      margin-bottom: 1.5rem;
+    }
+    
+    #courses ul {
+      margin-top: 1.5rem;
+    }
+    
+    .owl-studying {
+      width: 120px;
+      height: 120px;
+      padding: 4px;
+      margin-right: 40px;
+      margin-bottom: 20px;
+    }
+    
+    .owl-studying img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    
+    .upload-section {
+      background: #f8f9fa;
+      padding: 2rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+      border: 1px solid #e9ecef;
+    }
+    
+    .upload-form {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .file-upload {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    
+    .file-upload input[type="file"] {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+    
+    .upload-text {
+      display: block;
+      padding: 1rem;
+      background: white;
+      border: 2px dashed #4CAF50;
+      border-radius: 8px;
+      text-align: center;
+      color: #4CAF50;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .file-upload:hover .upload-text {
+      background: #f1f8e9;
+    }
+    
+    .upload-form textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-family: 'Vazirmatn', sans-serif;
+      transition: all 0.3s ease;
+    }
+    
+    .upload-form textarea:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+      outline: none;
+    }
+    
+    .upload-form select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-family: 'Vazirmatn', sans-serif;
+      background: white;
+      cursor: pointer;
+    }
+    
+    .upload-form select:focus {
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+      outline: none;
+    }
+    
+    .courses-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .course-item {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      height: 100%;
+    }
+    
+    .course-info {
+      text-align: right;
+    }
+    
+    .course-info h3 {
+      color: #4CAF50;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .instructor {
+      color: #666;
+      font-size: 1rem;
+    }
+    
+    .video-preview {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    
+    .video-preview iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    @media (max-width: 1200px) {
+      .courses-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .courses-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .course-item {
+        padding: 1rem;
+      }
+      
+      .course-info h3 {
+        font-size: 1.2rem;
+      }
+    }
+    .main-container {
+      display: flex;
+      flex-direction: row;
+      gap: 3rem;
+      padding: 2rem;
+      max-width: 1600px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .main-content {
+      flex: 1;
+      width: 100%;
+    }
+    
+    @media (max-width: 1200px) {
+      .main-container {
+        flex-direction: column;
+        gap: 2rem;
+      }
+      
+      .main-content {
+        width: 100%;
+      }
+    }
+    .nav-background {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #4CAF50;
+      z-index: 999;
+    }
+    .news-section-bottom {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .news-category {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+    
+    .news-category h3 {
+      color: #4CAF50;
+      font-size: 1.2rem;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #4CAF50;
+    }
+    
+    .news-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .news-list li {
+      margin-bottom: 1.2rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .news-list li:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .news-list a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.3rem;
+      transition: color 0.3s ease;
+      font-size: 0.95rem;
+    }
+    
+    .news-list a:hover {
+      color: #4CAF50;
+    }
+    
+    .news-date {
+      color: #666;
+      font-size: 0.85rem;
+    }
+    
+    @media (max-width: 1200px) {
+      .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .news-section-bottom {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+    }
+    .contact-section {
+      background: white;
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    
+    .contact-item i {
+      width: 30px;
+      height: 30px;
+      background: #f1f8e9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4CAF50;
+      font-size: 1rem;
+    }
+    
+    .contact-item h3 {
+      font-size: 0.9rem;
+      margin: 0;
+      color: #4CAF50;
+    }
+    
+    .contact-item p {
+      font-size: 0.85rem;
+      margin: 0;
+      color: #666;
+    }
+    
+    @media (max-width: 1200px) {
+      .contact-info {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .contact-info {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-section {
+        margin: 0.5rem;
+        padding: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-background"></div>
+  <header>
+    <div class="header-content">
+      <h1>به پلتفرم Learn & Earn خوش آمدید!</h1>
+      <img src="images/owl-logo.png.png" alt="Owl Logo" class="header-owl">
+    </div>
+    <p>آموزش ببین، آزمون بده، جایزه بگیر!</p>
+    <nav>
+      <div class="nav-left">
+        <img src="images/owl-logo.png.png" alt="Logo" class="nav-logo">
+        <div class="logo">Learn & Earn</div>
+      </div>
+      <div class="nav-links">
+        <a href="#about">درباره ما</a>
+        <a href="#register">ثبت‌نام</a>
+        <a href="#courses">آموزش‌ها</a>
+        <a href="#quiz">آزمون‌ها</a>
+        <a href="#dashboard">داشبورد امتیاز</a>
+      </div>
+      <div class="wallet-connect">
+        <button id="connectWallet" class="wallet-btn">
+          <i class="fas fa-wallet"></i>
+          <span>اتصال کیف پول</span>
+        </button>
+        <div id="walletInfo" class="wallet-info" style="display: none;">
+          <span class="wallet-address"></span>
+          <button id="disconnectWallet" class="disconnect-btn">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="main-container">
+    <div class="main-content">
+      <div id="about" class="section-with-owl">
+        <img src="images/owl-studying.png" alt="Studying Owl" class="owl-image owl-studying">
+        <h2>درباره پلتفرم</h2>
+        <p>در دنیایی که دانش و مهارت حرف اول را می‌زند، ما در <span class="highlight">Learn & Earn</span> یک هدف داریم:<br>
+        یادگیری را به یک فرصت واقعی برای کسب درآمد تبدیل کنیم.</p>
+
+        <p>اینجا جایی است که آموزش‌دهندگان برتر، آموزش‌های تخصصی خود را به اشتراک می‌گذارند،<br>
+        و آموزش‌گیرندگان، با تماشای این دوره‌ها و موفقیت در آزمون‌ها، پاداش‌های واقعی دریافت می‌کنند.</p>
+
+        <p>ما معتقدیم که هر کسی باید فرصت رشد، یادگیری و موفقیت مالی را بدون مرز تجربه کند.<br>
+        به همین دلیل با استفاده از تکنولوژی بلاکچین، شفافیت، امنیت و عدالت را در تمام مسیر همراهتان کرده‌ایم.</p>
+
+        <p>همراه ما شوید و آینده‌ای بهتر برای خودتان بسازید؛<br>
+        آموزش ببینید، موفق شوید، و جایزه بگیرید!</p>
+      </div>
+
+      <div id="register" class="section-with-owl">
+        <img src="images/owl-curious.png" alt="Curious Owl" class="owl-image owl-curious">
+        <h2>ثبت‌نام در پلتفرم</h2>
+        <p>برای شروع، اطلاعات خود را وارد کنید:</p>
+        <form class="registration-form">
+          <div class="form-group">
+            <label>نام کامل:</label>
+            <input type="text" name="fullname" required>
+          </div>
+          
+          <div class="form-group">
+            <label>ایمیل:</label>
+            <input type="email" name="email" required>
+          </div>
+          
+          <div class="form-group">
+            <label>رمز عبور:</label>
+            <input type="password" name="password" required>
+          </div>
+
+          <div class="wallet-connection-section">
+            <h3>اتصال کیف پول</h3>
+            <p>برای دریافت پاداش‌ها، لطفاً کیف پول خود را متصل کنید:</p>
+            <div class="wallet-connect">
+              <button id="connectWalletRegister" class="wallet-btn">
+                <i class="fas fa-wallet"></i>
+                <span>اتصال کیف پول</span>
+              </button>
+              <div id="walletInfoRegister" class="wallet-info" style="display: none;">
+                <span class="wallet-address"></span>
+                <button id="disconnectWalletRegister" class="disconnect-btn">
+                  <i class="fas fa-sign-out-alt"></i>
+                </button>
+              </div>
+            </div>
+            <p class="wallet-note">* اتصال کیف پول برای دریافت پاداش‌ها الزامی است</p>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="submit-btn">ثبت‌نام و شروع یادگیری</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="courses" class="section-with-owl">
+        <img src="images/owl-learning.png" alt="Learning Owl" class="owl-image owl-learning">
+        <h2>لیست آموزش‌ها</h2>
+        
+        <div class="courses-list">
+          <div class="course-item">
+            <div class="course-info">
+              <h3>آشنایی با بلاکچین و بیت‌کوین</h3>
+              <p class="instructor">مدرس: محمد هلاکویی</p>
+            </div>
+            <div class="video-preview">
+              <iframe 
+                width="560" 
+                height="315" 
+                src="https://www.youtube.com/embed/BKtj20Mj2Uk" 
+                title="آشنایی با بلاکچین و بیت‌کوین" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+          
+          <div class="course-item">
+            <div class="course-info">
+              <h3>تحلیل تکنیکال مقدماتی</h3>
+              <p class="instructor">مدرس: سهیل آزادی</p>
+            </div>
+            <div class="video-preview">
+              <iframe 
+                width="560" 
+                height="315" 
+                src="https://www.youtube.com/embed/UrctknB1fpc" 
+                title="تحلیل تکنیکال مقدماتی" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+          
+          <div class="course-item">
+            <div class="course-info">
+              <h3>چطور در بازار نزولی سود کنیم؟</h3>
+              <p class="instructor">مدرس: مهرداد کریپتو</p>
+            </div>
+            <div class="video-preview">
+              <iframe 
+                width="560" 
+                height="315" 
+                src="https://www.youtube.com/embed/5HpxIb0AuDE" 
+                title="چطور در بازار نزولی سود کنیم؟" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="quiz" class="section-with-owl">
+        <img src="images/owl-reward.png" alt="Reward Owl" class="owl-image owl-reward">
+        <h2>آزمون‌های آنلاین</h2>
+        <p>پس از دیدن آموزش، در آزمون شرکت کنید و امتیاز بگیرید!</p>
+        <button>شروع آزمون</button>
+      </div>
+
+      <div id="dashboard" class="section">
+        <h2>داشبورد امتیاز شما</h2>
+        <p>امتیازات کسب شده شما:</p>
+        <ul>
+          <li>آموزش ۱: ۵۰ امتیاز</li>
+          <li>آموزش ۲: ۴۰ امتیاز</li>
+          <li>آموزش ۳: در حال مشاهده...</li>
+        </ul>
+        <p><strong>مجموع امتیاز: ۹۰</strong></p>
+      </div>
+
+      <div class="news-section-bottom">
+        <h2>آخرین اخبار</h2>
+        <div class="news-grid">
+          <div class="news-category">
+            <h3>آخرین اخبار تکنولوژی</h3>
+            <ul class="news-list">
+              <li>
+                <a href="#">پیشرفت‌های جدید در هوش مصنوعی</a>
+                <span class="news-date">2 ساعت پیش</span>
+              </li>
+              <li>
+                <a href="#">رونمایی از گوشی جدید سامسونگ</a>
+                <span class="news-date">5 ساعت پیش</span>
+              </li>
+              <li>
+                <a href="#">بهترین لپ‌تاپ‌های 2024</a>
+                <span class="news-date">1 روز پیش</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="news-category">
+            <h3>آخرین اخبار آموزش</h3>
+            <ul class="news-list">
+              <li>
+                <a href="#">دوره‌های جدید تحلیل تکنیکال</a>
+                <span class="news-date">3 ساعت پیش</span>
+              </li>
+              <li>
+                <a href="#">وبینار رایگان بلاکچین</a>
+                <span class="news-date">6 ساعت پیش</span>
+              </li>
+              <li>
+                <a href="#">آموزش‌های پیشرفته تریدینگ</a>
+                <span class="news-date">2 روز پیش</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="news-category">
+            <h3>آخرین اخبار کریپتو</h3>
+            <ul class="news-list">
+              <li>
+                <a href="#">تحلیل قیمت بیت‌کوین</a>
+                <span class="news-date">1 ساعت پیش</span>
+              </li>
+              <li>
+                <a href="#">بهترین آلت‌کوین‌های 2024</a>
+                <span class="news-date">4 ساعت پیش</span>
+              </li>
+              <li>
+                <a href="#">اخبار جدید اتریوم</a>
+                <span class="news-date">1 روز پیش</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-section">
+        <h2>ارتباط با ما</h2>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <h3>آدرس</h3>
+              <p>تهران، خیابان ولیعصر، پلاک 123</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div>
+              <h3>تلفن</h3>
+              <p>021-12345678</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <h3>ایمیل</h3>
+              <p>info@learnandearn.com</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <h3>ساعات کاری</h3>
+              <p>شنبه تا چهارشنبه: 9 صبح تا 5 بعدازظهر</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© ۲۰۲۵ Learn & Earn - تمام حقوق محفوظ است</p>
+  </footer>
+
+  <script>
+    // Add wallet connection for registration form
+    document.addEventListener('DOMContentLoaded', () => {
+      const connectBtnRegister = document.getElementById('connectWalletRegister');
+      const disconnectBtnRegister = document.getElementById('disconnectWalletRegister');
+      const walletInfoRegister = document.getElementById('walletInfoRegister');
+
+      if (connectBtnRegister) {
+        connectBtnRegister.addEventListener('click', async () => {
+          try {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            if (accounts.length > 0) {
+              connectBtnRegister.style.display = 'none';
+              walletInfoRegister.style.display = 'flex';
+              const walletAddress = walletInfoRegister.querySelector('.wallet-address');
+              walletAddress.textContent = `${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
+            }
+          } catch (error) {
+            console.error('Error connecting wallet:', error);
+          }
+        });
+      }
+
+      if (disconnectBtnRegister) {
+        disconnectBtnRegister.addEventListener('click', () => {
+          connectBtnRegister.style.display = 'flex';
+          walletInfoRegister.style.display = 'none';
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
